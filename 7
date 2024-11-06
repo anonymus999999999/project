@@ -1,0 +1,15 @@
+# features/steps/web_steps.py
+
+from behave import when, then
+from selenium import webdriver
+
+@when('I visit the products page')
+def step_impl(context):
+    context.browser = webdriver.Chrome()
+    context.browser.get('http://localhost:8000/products/')
+
+@then('I should see a product with name "{product_name}"')
+def step_impl(context, product_name):
+    body = context.browser.page_source
+    assert product_name in body
+    context.browser.quit()
