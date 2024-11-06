@@ -1,0 +1,18 @@
+# features/products.feature
+
+Feature: Product management
+
+  Scenario: Create a new product
+    Given a product exists with name "Test Product" and price 100
+    When I update the product "Test Product" to have price 150
+    Then the product "Test Product" should have price 150
+
+  Scenario: Delete a product
+    Given a product exists with name "Old Product" and price 50
+    When I delete the product "Old Product"
+    Then the product "Old Product" should no longer exist
+
+  Scenario: Search for products by category
+    Given a product exists with name "Product A" and category "Electronics"
+    When I search for products by category "Electronics"
+    Then the product "Product A" should be in the results
