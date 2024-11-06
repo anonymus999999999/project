@@ -1,0 +1,21 @@
+# features/steps/load_steps.py
+
+from behave import given, when, then
+from myapp.models import Product
+from datetime import datetime
+
+@given('a product exists with name "{name}" and price {price}')
+def step_impl(context, name, price):
+    product = Product(name=name, price=price, stock=10, created_at=datetime.now(), updated_at=datetime.now())
+    product.save()
+
+@when('I update the product "{name}" to have price {new_price}')
+def step_impl(context, name, new_price):
+    product = Product.objects.get(name=name)
+    product.price = new_price
+    product.save()
+
+@then('the product "{name}" should have price {new_price}')
+def step_impl(context, name, new_price):
+    product = Product.objects.get(name=name)
+    assert product.price == new_price
